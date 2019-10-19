@@ -1,0 +1,22 @@
+{
+  "name": "create-docker-db",
+  "version": "1.0.0",
+  "description": "intaractive command line tool to craete db in docker container",
+  "main": "index.js",
+  "dependencies": {
+    "commander": "^3.0.2",
+    "inquirer": "^7.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "db",
+    "database",
+    "docker",
+    "container"
+  ],
+  "author": "Inoue Natsuki",
+  "license": "ISC"
+}
