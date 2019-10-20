@@ -41,9 +41,33 @@ const createVersion = async () => {
   ]).then(answers => console.log(answers.version))
 }
 
+const createYml = () => {
+  const filename = 'docker-compose.yml'
+  const version = ':latest'
+  const ymlTemplate = `version: '3.1'
+
+services:
+
+  db:
+    image: postgres${version}
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+`
+
+  const fs = require('fs');
+  fs.writeFile(filename, ymlTemplate, (err) => {
+    if (err) {
+      console.log(`Failed to create ${filename}`)
+      console.log(err)
+    }
+  })
+}
+
 const create = async () => {
   await createDatabase()
   await createVersion()
+  createYml()
 }
 
 create()
