@@ -20,36 +20,37 @@ program.parse(process.argv);
 // if (program.pizzaType) console.log(`- ${program.pizzaType}`);
 
 const createDatabase = async () => {
-  const answer = await inquirer.prompt([
+  const answers = await inquirer.prompt([
     {
       name: 'database',
       type: 'list',
       message: `Which database system you want to use?`,
       choices: ['postgresql']
     }
-  ]).then(answers => console.log(answers.database))
+  ])
+  return answers.database
 }
 
 const createVersion = async () => {
-  const answer = await inquirer.prompt([
+  const answers = await inquirer.prompt([
     {
       name: 'version',
       type: 'input',
       message: 'Which version you want to use?',
       default: 'latest'
     }
-  ]).then(answers => console.log(answers.version))
+  ])
+  return answers.version
 }
 
-const createYml = () => {
+const createYml = (version) => {
   const filename = 'docker-compose.yml'
-  const version = ':latest'
   const ymlTemplate = `version: '3.1'
 
 services:
 
   db:
-    image: postgres${version}
+    image: postgres:${version}
     restart: always
     environment:
       POSTGRES_PASSWORD: password
@@ -65,9 +66,12 @@ services:
 }
 
 const create = async () => {
-  await createDatabase()
-  await createVersion()
-  createYml()
+  const database = await createDatabase()
+  const version = await createVersion()
+  console.log(database)
+  console.log(version)
+
+  createYml(version)
 }
 
 create()
