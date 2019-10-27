@@ -31,8 +31,7 @@ const createVersion = async () => {
   return answers.version
 }
 
-const createYml = (version) => {
-  const filename = 'docker-compose.yml'
+const createYml = async (version) => {
   const ymlTemplate = `version: '3.1'
 
 services:
@@ -44,8 +43,14 @@ services:
       POSTGRES_PASSWORD: password
 `
 
-  const fs = require('fs');
-  fs.writeFile(filename, ymlTemplate, (err) => {
+  const fs = require('fs-extra')
+  const path = require('path')
+
+  const dockerDir = path.join(__dirname, 'docker-db')
+  const dockerComposeYml = 'docker-compose.yml'
+
+  await fs.mkdirp(dockerDir)
+  fs.writeFile(path.join(dockerDir, dockerComposeYml), ymlTemplate, (err) => {
     if (err) {
       console.log(`Failed to create ${filename}`)
       console.log(err)
@@ -59,7 +64,7 @@ const create = async () => {
   console.log(database)
   console.log(version)
 
-  createYml(version)
+  await createYml(version)
 }
 
 create()
