@@ -2,7 +2,9 @@
   "name": "create-docker-db",
   "version": "1.0.0",
   "description": "intaractive command line tool to craete db in docker container",
-  "main": "index.js",
+  "bin": {
+    "create-docker-db": "bin/create-docker-db.js"
+  },
   "dependencies": {
     "commander": "^3.0.2",
     "fs-extra": "^8.1.0",
