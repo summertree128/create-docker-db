@@ -47,9 +47,10 @@ services:
   const path = require('path')
 
   const dockerDir = path.join(__dirname, 'docker-db')
+  const entryPointDir = path.join(dockerDir, 'docker-entrypoint-initdb.d')
   const dockerComposeYml = 'docker-compose.yml'
 
-  await fs.mkdirp(dockerDir)
+  await fs.mkdirp(entryPointDir)
   fs.writeFile(path.join(dockerDir, dockerComposeYml), ymlTemplate, (err) => {
     if (err) {
       console.log(`Failed to create ${filename}`)
